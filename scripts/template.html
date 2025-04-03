@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LeetCode Explorer</title>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  <style> pre { background: #f8f8f8; padding: 10px; overflow-x: auto; } </style>
+</head>
+<body>
+  <h1>📘 LeetCode Explorer</h1>
+  <table id="solutions" class="display">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Difficulty</th>
+        <th>Tags</th>
+        <th>Link</th>
+        <th>Solution</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for entry in entries %}
+      <tr>
+        <td>{{ entry.title }}</td>
+        <td>{{ entry.difficulty }}</td>
+        <td>{{ entry.tags | join(", ") }}</td>
+        <td><a href="{{ entry.link }}" target="_blank">View</a></td>
+        <td><pre>{{ entry.code }}</pre></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <script>
+    $(document).ready(function() {
+      $('#solutions').DataTable();
+    });
+  </script>
+</body>
+</html>
