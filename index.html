@@ -98,6 +98,37 @@ class Solution:
 </pre></td>
                 </tr>
                 
+                <tr>
+                    <td>20</td>
+                    <td>Valid Parentheses</td>
+                    <td>Easy</td>
+                    <td>Stack</td>
+                    <td><a href="https://leetcode.com/problems/valid-parentheses" target="_blank">View</a></td>
+                    <td><pre>
+
+def isValid(s: str) -> bool:
+    """
+    Given a string `s` containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+
+    An input string is valid if:
+
+    1. Open brackets must be closed by the same type of brackets.
+    2. Open brackets must be closed in the correct order.
+    3. Every close bracket has a corresponding open bracket of the same type.
+    """
+    stack = []
+    mapping = {"}": "{", ")": "(", "]": "["}
+    for char in s:
+        if char in mapping:
+            if not stack or stack[-1] != mapping[char]:
+                return False
+            else:
+                stack.pop()
+        else:
+            stack.append(char)
+</pre></td>
+                </tr>
+                
             </tbody>
         </table>
 
