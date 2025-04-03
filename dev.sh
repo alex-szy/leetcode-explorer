@@ -1,0 +1,1 @@
+nodemon -w . -e py,html --ignore build -x "python scripts/generate_site.py && python -m http.server -d build"

@@ -2,8 +2,9 @@ import os
 from jinja2 import Template
 
 SOLUTION_DIR = "solutions"
+OUTPUT_DIR = "build"
 TEMPLATE_FILE = "scripts/template.html"
-OUTPUT_FILE = "index.html"
+OUTPUT_FILE = os.path.join(OUTPUT_DIR, "index.html")
 
 
 def parse_metadata(file_path):
@@ -45,12 +46,14 @@ def parse_metadata(file_path):
 def main():
     entries = []
     for filename in os.listdir(SOLUTION_DIR):
-        if filename.endswith(".py"):
+        if filename.endswith(".py") and filename != "00-template.py":
             path = os.path.join(SOLUTION_DIR, filename)
             entries.append(parse_metadata(path))
 
     with open(TEMPLATE_FILE, "r", encoding="utf-8") as f:
         template = Template(f.read())
+
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(template.render(entries=entries))
