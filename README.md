@@ -2,8 +2,6 @@
 
 This is a lightweight static website which presents all your leetcode solutions in a searchable, pretty format. It uses a jinja2 template to render all your problems and solutions on a statically generated website. The magic happens in scripts/generate_site.py, which reads all your solution files in the solutions folder and populates the website with the corresponding entries.
 
-There is a format to be followed in order for the problem set's metadata to be parsed correctly. For best results, when starting on a new problem, simply run the `new_solution.py` script and paste in the url of the leetcode problem, the script will automatically generate the solution file for you.
-
 ## Setup
 
 The static site generator needs `jinja2` to work, and the solution file generator needs `requests` to work. Create a virtual environment and install the dependencies:
@@ -20,6 +18,10 @@ It is entirely optional, but you can install nodemon using npm, which enables yo
 npm i -g nodemon
 ./dev.sh
 ```
+
+## Adding a new problem
+
+There is a format to be followed in order for the problem set's metadata to be parsed correctly. When starting on a new problem, run the `new_solution.py` script and paste in the url of the leetcode problem, the script will automatically generate the solution file for you.
 
 ## Deployment
 
