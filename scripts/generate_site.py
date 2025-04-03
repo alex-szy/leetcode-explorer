@@ -5,6 +5,7 @@ SOLUTION_DIR = "solutions"
 TEMPLATE_FILE = "scripts/template.html"
 OUTPUT_FILE = "index.html"
 
+
 def parse_metadata(file_path):
     metadata = {
         "filename": os.path.basename(file_path),
@@ -12,12 +13,16 @@ def parse_metadata(file_path):
         "title": "",
         "link": "",
         "difficulty": "",
+        "id": "",
         "tags": []
     }
     with open(file_path, "r", encoding="utf-8") as f:
         lines = f.readlines()
 
-    for line in lines:
+    start, end = None, -1
+    for i, line in enumerate(lines):
+        if line.startswith("# ID:"):
+            metadata["id"] = line.split(":", 1)[1].strip()
         if line.startswith("# Title:"):
             metadata["title"] = line.split(":", 1)[1].strip()
         elif line.startswith("# Link:"):
@@ -25,12 +30,17 @@ def parse_metadata(file_path):
         elif line.startswith("# Difficulty:"):
             metadata["difficulty"] = line.split(":", 1)[1].strip()
         elif line.startswith("# Tags:"):
-            metadata["tags"] = [tag.strip() for tag in line.split(":", 1)[1].split(",")]
-        elif not line.startswith("#"):
+            metadata["tags"] = [tag.strip()
+                                for tag in line.split(":", 1)[1].split(",")]
+        elif not line.startswith("#") and start is None:
+            start = i
+        elif line.startswith("if __name__"):
+            end = i
             break
 
-    metadata["code"] = "".join(lines)
+    metadata["code"] = "".join(lines[start:end])
     return metadata
+
 
 def main():
     entries = []
@@ -44,6 +54,7 @@ def main():
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(template.render(entries=entries))
+
 
 if __name__ == "__main__":
     main()

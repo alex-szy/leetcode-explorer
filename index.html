@@ -22,16 +22,27 @@
       </tr>
     </thead>
     <tbody>
-      {% for entry in entries %}
+      
       <tr>
-        <td>{{ entry.id }}</td>
-        <td>{{ entry.title }}</td>
-        <td>{{ entry.difficulty }}</td>
-        <td>{{ entry.tags | join(", ") }}</td>
-        <td><a href="{{ entry.link }}" target="_blank">View</a></td>
-        <td><pre>{{ entry.code }}</pre></td>
+        <td>1</td>
+        <td>Two Sum</td>
+        <td>Easy</td>
+        <td>Array, Hash Table</td>
+        <td><a href="https://leetcode.com/problems/two-sum/" target="_blank">View</a></td>
+        <td><pre>
+class Solution:
+    def twoSum(self, nums, target):
+        hashmap = {}
+        for i, num in enumerate(nums):
+            diff = target - num
+            if diff in hashmap:
+                return [hashmap[diff], i]
+            hashmap[num] = i
+
+
+</pre></td>
       </tr>
-      {% endfor %}
+      
     </tbody>
   </table>
   <script>
