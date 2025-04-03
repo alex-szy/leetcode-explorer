@@ -79,23 +79,217 @@
             <tbody>
                 
                 <tr>
+                    <td>139</td>
+                    <td>Word Break</td>
+                    <td>Medium</td>
+                    <td>Array, Hash Table, String, Dynamic Programming, Trie, Memoization</td>
+                    <td><a href="https://leetcode.com/problems/word-break/" target="_blank">View</a></td>
+                    <td><pre>class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        wordDict = set(wordDict)
+        maxlen = max(len(word) for word in wordDict)
+        arr = [False for _ in range(len(s))]
+        for i in range(len(s)):
+            if s[:i+1] in wordDict:
+                arr[i] = True
+            else:
+                arr[i] = any(
+                    arr[j-1] and s[j:i+1] in wordDict for j in range(i, max(0, i - maxlen), -1))
+        return arr[-1]
+
+    def wordBreak(self, s, wordDict) -> bool:
+        wordDict = set(wordDict)
+        q = deque([s])
+        seen = set(q)
+        while q:
+            curr = q.popleft()
+            if curr in wordDict:
+                return True
+            for i in range(len(curr)):
+                start, end = curr[:i+1], curr[i+1:]
+                if start in wordDict and end not in seen:
+                    q.append(end)
+                    seen.add(end)</pre></td>
+                </tr>
+                
+                <tr>
+                    <td>92</td>
+                    <td>Reverse Linked List II</td>
+                    <td>Medium</td>
+                    <td>Linked List</td>
+                    <td><a href="https://leetcode.com/problems/reverse-linked-list-ii/" target="_blank">View</a></td>
+                    <td><pre>class Solution:
+    def reverseBetween(self, head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
+        # Create a dummy node to eliminate the edge case where the start of the list has to be reversed
+        dummy = ListNode(0, head)
+
+        # Find the left split point
+        left_end, mid_start = dummy, head
+        for _ in range(left - 1):
+            left_end = mid_start
+            mid_start = mid_start.next
+
+        # Find the first node of the right segment
+        mid_end = mid_start
+        for _ in range(right - left):
+            mid_end = mid_end.next
+        right_start = mid_end.next
+
+        # Split the list so we can reverse it
+        mid_end.next = None
+
+        # Reverse the middle part
+        left_end.next = self.reverseList(mid_start)
+
+        # mid_start is now mid_end, cat the tail onto this node
+        mid_start.next = right_start</pre></td>
+                </tr>
+                
+                <tr>
                     <td>1</td>
                     <td>Two Sum</td>
                     <td>Easy</td>
                     <td>Array, Hash Table</td>
                     <td><a href="https://leetcode.com/problems/two-sum/" target="_blank">View</a></td>
-                    <td><pre>
-class Solution:
+                    <td><pre>class Solution:
     def twoSum(self, nums, target):
         hashmap = {}
         for i, num in enumerate(nums):
             diff = target - num
             if diff in hashmap:
                 return [hashmap[diff], i]
-            hashmap[num] = i
+            hashmap[num] = i</pre></td>
+                </tr>
+                
+                <tr>
+                    <td>83</td>
+                    <td>Remove Duplicates from Sorted List</td>
+                    <td>Easy</td>
+                    <td>Linked List</td>
+                    <td><a href="https://leetcode.com/problems/remove-duplicates-from-sorted-list/" target="_blank">View</a></td>
+                    <td><pre>class Solution:
+    def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if head is None:
+            return head
+        prev, curr = head, head.next
+        while curr:
+            if prev.val == curr.val:
+                prev.next = curr.next
+            else:
+                prev = curr
+            curr = curr.next
+        return head
 
+    def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode(0, head)
+        prev, curr = dummy, head
+        while curr:
+            while curr.next and curr.val == curr.next.val:
+                curr = curr.next
+            prev.next = curr
+            prev = curr
+            curr = curr.next</pre></td>
+                </tr>
+                
+                <tr>
+                    <td>948</td>
+                    <td>Sort an Array</td>
+                    <td>Medium</td>
+                    <td>Array, Divide and Conquer, Sorting, Heap (Priority Queue), Merge Sort, Bucket Sort, Radix Sort, Counting Sort</td>
+                    <td><a href="https://leetcode.com/problems/sort-an-array/" target="_blank">View</a></td>
+                    <td><pre>class Solution:
+    def sortArray(self, nums: List[int], start=0, stop=None) -> List[int]:
+        # quicksort
+        if stop is None:
+            stop = len(nums)
+        if stop <= start + 1:
+            return nums
+        l = self.partition(nums, start, stop)
+        self.sortArray(nums, start, l)
+        self.sortArray(nums, l, stop)
+        return nums
 
-</pre></td>
+    def partition(self, nums, start, stop):
+        pivot = nums[random.randrange(start, stop)]
+        l, r = start, stop - 1
+        while l <= r:
+            if nums[l] < pivot:
+                l += 1
+            elif nums[r] > pivot:
+                r -= 1
+            else:  # nums[l] >= pivot and nums[r] <= pivot
+                if nums[l] != nums[r]:
+                    nums[l], nums[r] = nums[r], nums[l]
+                l += 1
+                r -= 1</pre></td>
+                </tr>
+                
+                <tr>
+                    <td>1753</td>
+                    <td>Path With Minimum Effort</td>
+                    <td>Medium</td>
+                    <td>Array, Binary Search, Depth-First Search, Breadth-First Search, Union Find, Heap (Priority Queue), Matrix</td>
+                    <td><a href="https://leetcode.com/problems/path-with-minimum-effort/" target="_blank">View</a></td>
+                    <td><pre>class Solution:
+    def minimumEffortPath(self, heights: List[List[int]]) -> int:
+        """
+        Modified dijkstra algorithm that calculates the minimum effort required to traverse from [0][0] to [-1][-1]
+        The effort of a path is defined as the maximum change of elevation from 1 square to the next in that path
+        """
+        nrows, ncols = len(heights), len(heights[0])
+        minimumEfforts = [[math.inf for _ in range(ncols)]
+                          for _ in range(nrows)]
+        minimumEfforts[0][0] = 0
+        visited = [[False for _ in range(ncols)] for _ in range(nrows)]
+        q = [(0, 0, 0)]
+        while q:
+            currMinEffort, r, c = heapq.heappop(q)
+            visited[r][c] = True
+            refHeight = heights[r][c]
+            for dr, dc in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                nr, nc = r + dr, c + dc
+                if 0 <= nr < nrows and 0 <= nc < ncols and not visited[nr][nc]:
+                    nextMinEffort = max(currMinEffort, abs(
+                        heights[nr][nc] - refHeight))
+                    if nextMinEffort < minimumEfforts[nr][nc]:
+                        minimumEfforts[nr][nc] = nextMinEffort
+                        heapq.heappush(q, (nextMinEffort, nr, nc))</pre></td>
+                </tr>
+                
+                <tr>
+                    <td>53</td>
+                    <td>Maximum Subarray</td>
+                    <td>Medium</td>
+                    <td>Array, Divide and Conquer, Dynamic Programming</td>
+                    <td><a href="https://leetcode.com/problems/maximum-subarray/" target="_blank">View</a></td>
+                    <td><pre>class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        """
+        Enforces the recurrence relation
+        maxSumEndingAt[i] = max(0, maxSumEndingAt[i-1]) + nums[i]
+        The maximum sum of contiguous array elements which ends at an index depends only on the maximum sum of contiguous array elements which ends at the previous index
+        Each step, we are choosing whether to include the previous sequence of contiguous elements or not.
+        If the previous sequence of contiguous elements has a negative sum, then it is obviously not in the maximum sum.
+        """
+        maxSumEndingAt = [nums[0]]
+        maxSub = nums[0]
+        for i in range(1, len(nums)):
+            maxSumEndingAt.append(max(0, maxSumEndingAt[-1]) + nums[i])
+            maxSub = max(maxSub, maxSumEndingAt[-1])
+        return maxSub
+
+    def maxSubArray(self, nums: List[int]) -> int:
+        """
+        More space efficient than previous implementation.
+        Instead of an array, we use just a single element to track the previous maximum sum
+        """
+        maxSumEndingAt = 0
+        maxSub = nums[0]
+        for num in nums:
+            if maxSumEndingAt < 0:
+                maxSumEndingAt = 0
+            maxSumEndingAt += num
+            maxSub = max(maxSub, maxSumEndingAt)</pre></td>
                 </tr>
                 
                 <tr>
@@ -104,9 +298,7 @@ class Solution:
                     <td>Easy</td>
                     <td>Stack</td>
                     <td><a href="https://leetcode.com/problems/valid-parentheses" target="_blank">View</a></td>
-                    <td><pre>
-
-def isValid(s: str) -> bool:
+                    <td><pre>def isValid(s: str) -> bool:
     """
     Given a string `s` containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
 
@@ -125,8 +317,118 @@ def isValid(s: str) -> bool:
             else:
                 stack.pop()
         else:
-            stack.append(char)
-</pre></td>
+            stack.append(char)</pre></td>
+                </tr>
+                
+                <tr>
+                    <td>206</td>
+                    <td>Reverse Linked List</td>
+                    <td>Easy</td>
+                    <td>Linked List, Recursion</td>
+                    <td><a href="https://leetcode.com/problems/reverse-linked-list/" target="_blank">View</a></td>
+                    <td><pre>class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        prev, curr = None, head
+        while curr:
+            temp = curr.next
+            curr.next = prev
+            prev = curr
+            curr = temp
+        return prev</pre></td>
+                </tr>
+                
+                <tr>
+                    <td>792</td>
+                    <td>Binary Search</td>
+                    <td>Easy</td>
+                    <td>Array, Binary Search</td>
+                    <td><a href="https://leetcode.com/problems/binary-search/" target="_blank">View</a></td>
+                    <td><pre>class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        """
+        Note: the termination for a vanilla binary search is always when left == right
+        left > right will never occur.
+        """
+        left, right = 0, len(nums) - 1
+        while left <= right:
+            mid = (left + right) // 2
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] < target:
+                left = mid + 1
+            else:
+                right = mid - 1</pre></td>
+                </tr>
+                
+                <tr>
+                    <td>82</td>
+                    <td>Remove Duplicates from Sorted List II</td>
+                    <td>Medium</td>
+                    <td>Linked List, Two Pointers</td>
+                    <td><a href="https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/" target="_blank">View</a></td>
+                    <td><pre>class Solution:
+    def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode(0, head)
+        prev, curr = dummy, head
+        while curr:
+            while curr.next and curr.next.val == curr.val:
+                curr = curr.next
+            if prev.next != curr:
+                prev.next = curr.next
+            else:
+                prev = curr
+            curr = curr.next</pre></td>
+                </tr>
+                
+                <tr>
+                    <td>35</td>
+                    <td>Search Insert Position</td>
+                    <td>Easy</td>
+                    <td>Array, Binary Search</td>
+                    <td><a href="https://leetcode.com/problems/search-insert-position/" target="_blank">View</a></td>
+                    <td><pre>class Solution:
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        """
+        Identical to a vanilla binary search, except for the return statement
+        Why do we return left?
+        Upon termination of the while loop, we only have 1 possible situation.
+        The right pointer is 1 left of the left pointer.
+        This could have happened due to 2 different situations.
+        1. left == right, mid != target
+        2. left + 1 == right, mid > target
+        Remember, similar to firstBadVersion, we want to return the position of the first element which is greater than target.
+        In both these situations, this is the left pointer.
+        """
+        left, right = 0, len(nums) - 1
+        while left <= right:
+            mid = (left + right) // 2
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] < target:
+                left = mid + 1
+            else:
+                right = mid - 1</pre></td>
+                </tr>
+                
+                <tr>
+                    <td>278</td>
+                    <td>First Bad Version</td>
+                    <td>Easy</td>
+                    <td>Binary Search, Interactive</td>
+                    <td><a href="https://leetcode.com/problems/first-bad-version/" target="_blank">View</a></td>
+                    <td><pre>class Solution:
+    def firstBadVersion(self, n: int, isBadVersion: Callable[[int], bool]) -> int:
+        """
+        In this version of binary search, since we do right = mid instead of right = mid - 1, and we use floor div, the 2 pointers will NEVER cross over.
+        Upon algorithm termination, left always == right
+        """
+        left, right = 1, n
+        while left < right:
+            mid = (left + right) // 2
+            if isBadVersion(mid):
+                right = mid
+            else:
+                left = mid + 1</pre></td>
                 </tr>
                 
             </tbody>
