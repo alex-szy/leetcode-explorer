@@ -33,13 +33,13 @@ def parse_metadata(file_path):
         elif line.startswith("# Tags:"):
             metadata["tags"] = [tag.strip()
                                 for tag in line.split(":", 1)[1].split(",")]
-        elif not line.startswith("#") and start is None:
+        elif line.startswith("class Solution") or not line.startswith("#") and start is None:
             start = i
         elif line.startswith("if __name__"):
             end = i
             break
 
-    metadata["code"] = "".join(lines[start:end])
+    metadata["code"] = "".join(lines[start:end]).strip()
     return metadata
 
 
