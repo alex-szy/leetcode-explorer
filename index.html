@@ -114,6 +114,29 @@
                 </tr>
                 
                 <tr>
+                    <td>242</td>
+                    <td>Valid Anagram</td>
+                    <td>Easy</td>
+                    <td>Hash Table, String, Sorting</td>
+                    <td><a href="https://leetcode.com/problems/valid-anagram/" target="_blank">View</a></td>
+                    <td><pre>class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        return Counter(s) == Counter(t)
+
+    def isAnagram(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+        counts = defaultdict(int)
+        for char in s:
+            counts[char] += 1
+        for char in t:
+            if counts[char] == 0:
+                return False
+            counts[char] -= 1
+        return True</pre></td>
+                </tr>
+                
+                <tr>
                     <td>92</td>
                     <td>Reverse Linked List II</td>
                     <td>Medium</td>
@@ -148,6 +171,41 @@
                 </tr>
                 
                 <tr>
+                    <td>733</td>
+                    <td>Flood Fill</td>
+                    <td>Easy</td>
+                    <td>Array, Depth-First Search, Breadth-First Search, Matrix</td>
+                    <td><a href="https://leetcode.com/problems/flood-fill/" target="_blank">View</a></td>
+                    <td><pre>class Solution:
+    def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
+        prev_color = image[sr][sc]
+        if prev_color == color:
+            return image
+        image[sr][sc] = color
+        for dr, dc in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+            nr, nc = sr + dr, sc + dc
+            if 0 <= nr < len(image) and 0 <= nc < len(image[0]) and image[nr][nc] == prev_color:
+                self.floodFill(image, nr, nc, color)
+        return image
+
+    def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
+        prev_color = image[sr][sc]
+        if prev_color == color:
+            return image
+        s = [(sr, sc)]
+        while s:
+            r, c = s.pop()
+            if image[r][c] == color:
+                continue
+            image[r][c] = color
+            for dr, dc in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+                nr, nc = r + dr, c + dc
+                if 0 <= nr < len(image) and 0 <= nc < len(image[0]) and image[nr][nc] == prev_color:
+                    s.append((nr, nc))
+        return image</pre></td>
+                </tr>
+                
+                <tr>
                     <td>1</td>
                     <td>Two Sum</td>
                     <td>Easy</td>
@@ -161,6 +219,25 @@
             if diff in hashmap:
                 return [hashmap[diff], i]
             hashmap[num] = i</pre></td>
+                </tr>
+                
+                <tr>
+                    <td>121</td>
+                    <td>Best Time to Buy and Sell Stock</td>
+                    <td>Easy</td>
+                    <td>Array, Dynamic Programming</td>
+                    <td><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock/" target="_blank">View</a></td>
+                    <td><pre>class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        buy = prices[0]
+        profit = 0
+        for price in prices:
+            if price < buy:
+                buy = price
+            new_profit = price - buy
+            if new_profit > profit:
+                profit = new_profit
+        return profit</pre></td>
                 </tr>
                 
                 <tr>
@@ -353,6 +430,65 @@
                 </tr>
                 
                 <tr>
+                    <td>235</td>
+                    <td>Lowest Common Ancestor of a Binary Search Tree</td>
+                    <td>Medium</td>
+                    <td>Tree, Depth-First Search, Binary Search Tree, Binary Tree</td>
+                    <td><a href="https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/" target="_blank">View</a></td>
+                    <td><pre>class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        result = None
+        for p_node, q_node in zip(self.dfs(root, p), self.dfs(root, q)):
+            if p_node == q_node:
+                result = p_node
+            else:
+                break
+        return result
+
+    def dfs(self, root: 'TreeNode', target: 'TreeNode') -> Optional[List['TreeNode']]:
+        if root == target:
+            return [root]
+        if root is None:
+            return None
+        l, r = self.dfs(root.left, target), self.dfs(root.right, target)
+        if r:
+            return [root] + r
+        else:
+            return None if not l else [root] + l
+
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        while root:
+            if p.val < root.val and q.val < root.val:
+                root = root.left
+            elif p.val > root.val and q.val > root.val:
+                root = root.right
+            else:
+                return root</pre></td>
+                </tr>
+                
+                <tr>
+                    <td>125</td>
+                    <td>Valid Palindrome</td>
+                    <td>Easy</td>
+                    <td>Two Pointers, String</td>
+                    <td><a href="https://leetcode.com/problems/valid-palindrome/" target="_blank">View</a></td>
+                    <td><pre>class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        left, right = 0, len(s) - 1
+        while left < right:
+            if not s[left].isalnum():
+                left += 1
+            elif not s[right].isalnum():
+                right -= 1
+            elif s[left].lower() == s[right].lower():
+                left += 1
+                right -= 1
+            else:
+                return False
+        return True</pre></td>
+                </tr>
+                
+                <tr>
                     <td>206</td>
                     <td>Reverse Linked List</td>
                     <td>Easy</td>
@@ -412,6 +548,32 @@
                 prev = curr
             curr = curr.next
         return dummy.next</pre></td>
+                </tr>
+                
+                <tr>
+                    <td>226</td>
+                    <td>Invert Binary Tree</td>
+                    <td>Easy</td>
+                    <td>Tree, Depth-First Search, Breadth-First Search, Binary Tree</td>
+                    <td><a href="https://leetcode.com/problems/invert-binary-tree/" target="_blank">View</a></td>
+                    <td><pre>class Solution:
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        if root is None:
+            return None
+        root.left, root.right = self.invertTree(
+            root.right), self.invertTree(root.left)
+        return root
+
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        if root is None:
+            return None
+        s = [root]
+        while s:
+            curr = s.pop()
+            curr.left, curr.right = curr.right, curr.left
+            curr.left and s.append(curr.left)
+            curr.right and s.append(curr.right)
+        return root</pre></td>
                 </tr>
                 
                 <tr>
