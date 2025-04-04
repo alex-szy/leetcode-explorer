@@ -20,7 +20,7 @@ def parse_metadata(file_path):
     with open(file_path, "r", encoding="utf-8") as f:
         lines = f.readlines()
 
-    start, end = None, -1
+    start, end = None, None
     for i, line in enumerate(lines):
         if line.startswith("# ID:"):
             metadata["id"] = line.split(":", 1)[1].strip()
