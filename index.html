@@ -109,7 +109,8 @@
                 start, end = curr[:i+1], curr[i+1:]
                 if start in wordDict and end not in seen:
                     q.append(end)
-                    seen.add(end)</pre></td>
+                    seen.add(end)
+        return False</pre></td>
                 </tr>
                 
                 <tr>
@@ -142,7 +143,8 @@
         left_end.next = self.reverseList(mid_start)
 
         # mid_start is now mid_end, cat the tail onto this node
-        mid_start.next = right_start</pre></td>
+        mid_start.next = right_start
+        return dummy.next</pre></td>
                 </tr>
                 
                 <tr>
@@ -188,7 +190,8 @@
                 curr = curr.next
             prev.next = curr
             prev = curr
-            curr = curr.next</pre></td>
+            curr = curr.next
+        return head</pre></td>
                 </tr>
                 
                 <tr>
@@ -221,7 +224,8 @@
                 if nums[l] != nums[r]:
                     nums[l], nums[r] = nums[r], nums[l]
                 l += 1
-                r -= 1</pre></td>
+                r -= 1
+        return l</pre></td>
                 </tr>
                 
                 <tr>
@@ -253,7 +257,8 @@
                         heights[nr][nc] - refHeight))
                     if nextMinEffort < minimumEfforts[nr][nc]:
                         minimumEfforts[nr][nc] = nextMinEffort
-                        heapq.heappush(q, (nextMinEffort, nr, nc))</pre></td>
+                        heapq.heappush(q, (nextMinEffort, nr, nc))
+        return minimumEfforts[-1][-1]</pre></td>
                 </tr>
                 
                 <tr>
@@ -289,7 +294,8 @@
             if maxSumEndingAt < 0:
                 maxSumEndingAt = 0
             maxSumEndingAt += num
-            maxSub = max(maxSub, maxSumEndingAt)</pre></td>
+            maxSub = max(maxSub, maxSumEndingAt)
+        return maxSub</pre></td>
                 </tr>
                 
                 <tr>
@@ -317,7 +323,8 @@
             else:
                 stack.pop()
         else:
-            stack.append(char)</pre></td>
+            stack.append(char)
+    return not stack</pre></td>
                 </tr>
                 
                 <tr>
@@ -357,7 +364,8 @@
             elif nums[mid] < target:
                 left = mid + 1
             else:
-                right = mid - 1</pre></td>
+                right = mid - 1
+        return None</pre></td>
                 </tr>
                 
                 <tr>
@@ -377,7 +385,8 @@
                 prev.next = curr.next
             else:
                 prev = curr
-            curr = curr.next</pre></td>
+            curr = curr.next
+        return dummy.next</pre></td>
                 </tr>
                 
                 <tr>
@@ -407,7 +416,8 @@
             elif nums[mid] < target:
                 left = mid + 1
             else:
-                right = mid - 1</pre></td>
+                right = mid - 1
+        return left</pre></td>
                 </tr>
                 
                 <tr>
@@ -428,7 +438,8 @@
             if isBadVersion(mid):
                 right = mid
             else:
-                left = mid + 1</pre></td>
+                left = mid + 1
+        return left</pre></td>
                 </tr>
                 
             </tbody>
