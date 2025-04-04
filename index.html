@@ -339,6 +339,36 @@
                 </tr>
                 
                 <tr>
+                    <td>141</td>
+                    <td>Linked List Cycle</td>
+                    <td>Easy</td>
+                    <td>Hash Table, Linked List, Two Pointers</td>
+                    <td><a href="https://leetcode.com/problems/linked-list-cycle/" target="_blank">View</a></td>
+                    <td><pre>class Solution:
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+        seen = set()
+        while head:
+            if head in seen:
+                return True
+            seen.add(head)
+            head = head.next
+        return False
+
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+        """
+        Tortoise and hare approach. Have 1 fast and 1 slow pointer.
+        If the fast pointer catches up with the slow pointer, we have a cycle.
+        """
+        fast, slow = head, head
+        while fast and fast.next and slow:
+            slow = slow.next
+            fast = fast.next.next
+            if fast == slow:
+                return True
+        return False</pre></td>
+                </tr>
+                
+                <tr>
                     <td>53</td>
                     <td>Maximum Subarray</td>
                     <td>Medium</td>
@@ -489,6 +519,51 @@
                 </tr>
                 
                 <tr>
+                    <td>232</td>
+                    <td>Implement Queue using Stacks</td>
+                    <td>Easy</td>
+                    <td>Stack, Design, Queue</td>
+                    <td><a href="https://leetcode.com/problems/implement-queue-using-stacks/" target="_blank">View</a></td>
+                    <td><pre>class MyQueue:
+
+    def __init__(self):
+        self.s1 = []
+        self.s2 = []
+
+    def push(self, x: int) -> None:
+        if not self.s2:
+            self.s2.append(x)
+            while self.s1:
+                self.s2.append(self.sl.pop())
+        else:
+            self.s1.append(x)
+
+    def pop(self) -> int:
+        if not self.s2:
+            while self.s1:
+                self.s2.append(self.s1.pop())
+        result = self.s2.pop()
+        if not self.s2:
+            while self.s1:
+                self.s2.append(self.s1.pop())
+        return result
+
+    def peek(self) -> int:
+        return self.s2[-1]
+
+    def empty(self) -> bool:
+        return not (self.s1 or self.s2)
+
+
+# Your MyQueue object will be instantiated and called as such:
+# obj = MyQueue()
+# obj.push(x)
+# param_2 = obj.pop()
+# param_3 = obj.peek()
+# param_4 = obj.empty()</pre></td>
+                </tr>
+                
+                <tr>
                     <td>206</td>
                     <td>Reverse Linked List</td>
                     <td>Easy</td>
@@ -503,6 +578,25 @@
             prev = curr
             curr = temp
         return prev</pre></td>
+                </tr>
+                
+                <tr>
+                    <td>110</td>
+                    <td>Balanced Binary Tree</td>
+                    <td>Easy</td>
+                    <td>Tree, Depth-First Search, Binary Tree</td>
+                    <td><a href="https://leetcode.com/problems/balanced-binary-tree/" target="_blank">View</a></td>
+                    <td><pre>class Solution:
+    def isBalanced(self, root: Optional[TreeNode]) -> bool:
+        return self.height(root) != -1
+
+    def height(self, root: Optional[TreeNode]) -> int:
+        if not root:
+            return 0
+        l_h, r_h = self.height(root.left), self.height(root.right)
+        if l_h == -1 or r_h == -1 or abs(l_h - r_h) > 1:
+            return -1
+        return max(l_h, r_h) + 1</pre></td>
                 </tr>
                 
                 <tr>
