@@ -299,6 +299,31 @@
                 </tr>
                 
                 <tr>
+                    <td>21</td>
+                    <td>Merge Two Sorted Lists</td>
+                    <td>Easy</td>
+                    <td>Linked List, Recursion</td>
+                    <td><a href="https://leetcode.com/problems/merge-two-sorted-lists/" target="_blank">View</a></td>
+                    <td><pre>class Solution:
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode(0, None)
+        curr = dummy
+        while list1 and list2:
+            if list1.val < list2.val:
+                curr.next = list1
+                list1 = list1.next
+            else:
+                curr.next = list2
+                list2 = list2.next
+            curr = curr.next
+        if list1:
+            curr.next = list1
+        else:
+            curr.next = list2
+        return dummy.next</pre></td>
+                </tr>
+                
+                <tr>
                     <td>20</td>
                     <td>Valid Parentheses</td>
                     <td>Easy</td>
