@@ -79,11 +79,11 @@
             <tbody>
                 {% for entry in entries %}
                 <tr>
-                    <td>{{ entry.id }}</td>
-                    <td>{{ entry.title }}</td>
-                    <td>{{ entry.difficulty }}</td>
-                    <td>{{ entry.tags | join(", ") }}</td>
-                    <td><a href="{{ entry.link }}" target="_blank">View</a></td>
+                    <td>{{ entry.ID }}</td>
+                    <td>{{ entry.Title }}</td>
+                    <td>{{ entry.Difficulty }}</td>
+                    <td>{{ entry.Tags | join(", ") }}</td>
+                    <td><a href="{{ entry.Link }}" target="_blank">View</a></td>
                     <td><pre>{{ entry.code }}</pre></td>
                 </tr>
                 {% endfor %}
