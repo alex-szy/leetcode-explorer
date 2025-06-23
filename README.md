@@ -12,11 +12,18 @@ pip install -r requirements.txt
 
 ## Development
 
-It is entirely optional, but you can install nodemon using npm, which enables you to run the dev script `dev.sh`. This starts a daemon which watches for changes to the files, regenerates the site and hosts it all at once so you don't have to. If you don't use this, simply run the `generate_site.py` script yourself and host the `build` directory yourself as well.
+It is entirely optional, but you can install nodemon using npm, which enables you to run the dev script `dev.sh`. This starts a daemon which watches for changes to the files, regenerates the site and hosts it all at once so you don't have to.
 
 ```
 npm i -g nodemon
 ./dev.sh
+```
+
+If you don't use this, simply run the `generate_site.py` script yourself and host the `build` directory yourself as well. One way to do it is shown below:
+
+```
+python scripts/generate_site.py
+python -m http.server -d build
 ```
 
 ## Adding a new problem
