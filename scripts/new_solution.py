@@ -29,7 +29,7 @@ def fetch_problem_metadata(slug):
     }
 
     response = requests.get("https://leetcode.com/graphql",
-                            headers=headers, json=query)
+                            headers=headers, json=query, verify=False)
     response.raise_for_status()
     return response.json()["data"]["question"]
 
