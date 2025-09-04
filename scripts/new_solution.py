@@ -9,10 +9,7 @@ def slug_from_url(url):
 
 
 def fetch_problem_metadata(slug):
-    headers = {
-        "Content-Type": "application/json",
-        "User-Agent": "Mozilla/5.0"
-    }
+    headers = {"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"}
     query = {
         "query": """
             query getQuestionDetail($titleSlug: String!) {
@@ -25,11 +22,12 @@ def fetch_problem_metadata(slug):
                 }
             }
         """,
-        "variables": {"titleSlug": slug}
+        "variables": {"titleSlug": slug},
     }
 
-    response = requests.get("https://leetcode.com/graphql",
-                            headers=headers, json=query, verify=False)
+    response = requests.get(
+        "https://leetcode.com/graphql", headers=headers, json=query, verify=False
+    )
     response.raise_for_status()
     return response.json()["data"]["question"]
 
@@ -43,13 +41,19 @@ def create_solution_file(metadata, slug):
 
     # Get the Python3 starter code
     code_snippet = next(
-        (snippet["code"] for snippet in metadata["codeSnippets"]
-         if snippet["langSlug"] == "python3"),
-        "# Solution not available in Python3"
+        (
+            snippet["code"]
+            for snippet in metadata["codeSnippets"]
+            if snippet["langSlug"] == "python3"
+        ),
+        "# Solution not available in Python3",
     )
 
     filename = os.path.join(
-        os.path.dirname(os.path.dirname(__file__)), "solutions", f"{id.zfill(2)}-{slug.replace("-", "_")}.py")
+        os.path.dirname(os.path.dirname(__file__)),
+        "solutions",
+        f"{id.zfill(2)}-{slug.replace('-', '_')}.py",
+    )
     with open(filename, "w", encoding="utf-8") as f:
         f.write(f"# ID: {id}\n")
         f.write(f"# Title: {title}\n")
